@@ -1,4 +1,6 @@
 # phpsitestat
 Collecting and display of statistics of visit of the your website
 
-http://www.nefone.ru
+Author: Toropov Alexandr
+
+Site: http://www.nefone.ru
