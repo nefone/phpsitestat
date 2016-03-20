@@ -1,5 +1,5 @@
 <?php
-//перенаправляем на index.php если пользователь хочет открыть func.php
+//перенаправляем на index.php если пользователь хочет открыть sniff.php
 if (preg_match("/sniff.php/", $_SERVER['PHP_SELF'])){
     header("location: index.php");
     die();
