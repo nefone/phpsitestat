@@ -9,7 +9,8 @@ if (preg_match("/func.php/", $_SERVER['PHP_SELF'])){
 $fileName="stat.txt"; //имя файла со статистикой
 $maxVisitors=30; //количество отоброжаемых записей
 
-function showStat () {
+function showStat()
+{
     global $fileName;
     //открываю файл и вывожу начало таблицы
     $fbase = file($fileName);
@@ -25,9 +26,29 @@ function showStat () {
         $strr=explode("::", $s);
         if (empty($strr)) {break;}
         //вывожу данные
-        echo "<tr class=\"counters\"><td>$strr[0]</td><td>$strr[1]</td><td>$strr[2]</td><td>$strr[3]</td><td>$strr[4]</td><td>$strr[5]</td></tr>";
+        echo "<tr class=\"counters\"><td>$strr[0]</td><td><a href=\"who.php?ip=$strr[1]\">$strr[1]</a></td><td>$strr[2]</td><td>$strr[3]</td><td>$strr[4]</td><td>$strr[5]</td></tr>";
     }
     echo "</table>";
+}
+
+function whoIp($ip)
+{
+	$sock = fsockopen("whois.ripe.net", 43, $errno, $errstr);
+	echo("<b>Info about IP: ".$ip."</b><br>");
+	if (!$sock)
+	{
+		echo ("$errno ($errstr)");
+		return;
+    }
+    else
+    {
+		fputs($sock, $ip."\r\n");
+		while(!feof($sock)){
+			echo (str_replace(":",":&nbsp;&nbsp;", fgets($sock, 128))."<br>");
+		}
+		
+	}
+	fclose($sock);
 }
 
 ?>
