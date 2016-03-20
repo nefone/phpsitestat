@@ -6,8 +6,9 @@ Author: Toropov Alexandr
 Site: http://www.nefone.ru
 
 How to Use? - Include this code in page from your site:
+
 <?php
-error_reporting(0); //отключаем показ ошибок
+error_reporting(0);
 include("sniff.php");
 saveUserData();
 ?>
