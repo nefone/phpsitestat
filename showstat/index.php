@@ -1,3 +1,5 @@
+<?php
+?>
 <?php include("func.php"); ?>
 <!doctype html>
 <html>
