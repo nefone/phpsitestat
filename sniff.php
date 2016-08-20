@@ -23,4 +23,3 @@ function saveUserData(){
         fclose($f);
     }
 }
-?>

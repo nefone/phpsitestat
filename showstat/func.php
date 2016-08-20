@@ -59,5 +59,3 @@ function whoIp($ip)
 	}
 	fclose($sock);
 }
-
-?>
