@@ -1,4 +1,7 @@
-<?php include("func.php"); ?>
+<?php
+    session_start();
+    include("func.php");
+?>
 <!doctype html>
 <html>
 <head>

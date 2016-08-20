@@ -1,13 +1,21 @@
 <?php
+session_start();
+
 function Login($usetname) {
     if ($username == '') return false;
     
+    $_SESSION['username'] = $username;
     
-}
+    if ($remember) {
+        setcookie('username', $username, time() + 3600*24*7);
+    }
+    return true;
+} 
 
 
 function LogOut() {
-    
+    setcookie('usetname', '', time()-1);
+    unset($_SESSION['username']);
 }
 
 
