@@ -29,9 +29,10 @@
     </style>
 </head>
 <body>
-Статистика:<br>
+
 <?php
 showStat();
 ?>
+
 </body>
 </html>

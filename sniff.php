@@ -32,10 +32,8 @@ function saveUserData(){
     $statement = mysqli_prepare($link, "INSERT INTO statistika(user_agent,remote_addr,remote_host,referer,request_uri,cur_time) VALUES(?,?,?,?,?,?)");
     
     if($statement){
-		mysqli_stmt_bind_param($statement, "ssssss", $user_agent, $remote_addr, $remote_host, $refer, $request_uri, $cur_time);
-		
-		mysqli_stmt_execute($statement);
-		
+		mysqli_stmt_bind_param($statement, "ssssss", $user_agent, $remote_addr, $remote_host, $refer, $request_uri, $cur_time);		
+		mysqli_stmt_execute($statement);		
 		mysqli_stmt_close($statement);
 	}
 	

@@ -5,32 +5,37 @@ if (preg_match("/func.php/", $_SERVER['PHP_SELF'])){
     die();
 }
 
-
-$fileName="stat.txt"; //имя файла со статистикой
-$maxVisitors=30; //количество отоброжаемых записей
-
 //функция показа статистики
 function showStat()
-{
-    global $fileName;
-    //открываю файл и вывожу начало таблицы
-    $fbase = file($fileName);
-    $fbase = array_reverse($fbase);
-    $count = sizeOf($fbase);
-    echo "Всего посещений: $count<br><br>";
-    echo "<table><tr class=\"heads\"><td>Браузер</td><td>IP</td><td>Хост</td><td>Ссылка</td><td>Страница</td><td>Время визита</td></tr>";
-    //запускаю цикл выводы статистики
-    for ($i=0; $i<100; $i++)
-    {
-        if ($i>=sizeof($fbase)) {break;}
-        $s=$fbase[$i];
-        //разделяю
-        $strr=explode("::", $s);
-        if (empty($strr)) {break;}
-        //вывожу данные
-        echo "<tr class=\"counters\"><td>$strr[0]</td><td><a href=\"who.php?ip=$strr[1]\">$strr[1]</a></td><td>$strr[2]</td><td>$strr[3]</td><td>$strr[4]</td><td>$strr[5]</td></tr>";
-    }
-    echo "</table>";
+{    
+    $link = mysqli_connect("localhost", "root", "", "site_stat");
+    
+    if(!$link){
+		echo "Не удалось подкллючиться к БД : (" . mysqli_connect_errno() . ")";
+		exit();
+	}
+	
+	$result = mysqli_query($link, "SELECT * FROM statistika");
+	
+	if(mysqli_num_rows($result) <= 0){
+		echo "<h2>Посещений нет :(</h2>";
+	} else {
+		$visit_count = mysqli_num_rows($result);
+	}
+	
+	if($result){
+		echo "<b>Всего посещений:</b> " .$visit_count;
+		echo "<table><tr class=\"heads\"><td>Браузер</td><td>IP</td><td>Хост</td><td>Ссылка</td><td>Страница</td><td>Время визита</td></tr>";
+		while($row = mysqli_fetch_assoc($result)){
+			echo "<tr class=\"counters\"><td>". $row['user_agent'] . "</td>";
+			echo "<td><a target=\"_blank\" href=\"who.php?ip=".$row['remote_addr']."\">". $row['remote_addr'] . "</a></td>";
+			echo "<td>". $row['remote_host'] . "</td>";
+			echo "<td>". $row['referer'] . "</td>";
+			echo "<td>". $row['request_uri'] . "</td>";
+			echo "<td>". $row['cur_time'] . "</td></tr>";
+		}
+		echo "</table>";
+	}	
 }
 
 //функция whois для показа инфо об IP 
